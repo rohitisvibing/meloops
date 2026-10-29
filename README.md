@@ -1,58 +1,47 @@
 # Meloops
 
-A mobile-first web app for playlists of song *moments*: paste a YouTube, YouTube Music or Spotify link, mark a start and end time, and collect, reorder, rate and share those segments. Meloops stores links and timestamps. The music streams in the app through the official YouTube and Spotify players.
+## Install
 
-Read [`docs/youtube-feasibility.md`](docs/youtube-feasibility.md) and [`docs/spotify-feasibility.md`](docs/spotify-feasibility.md) first. They cover what each platform allows, including why there are no paid tiers.
+### 1. Requirements
 
-## Run it
+- Node.js 20 or newer
+- A [Supabase](https://supabase.com) project (for Google sign-in and saved playlists)
+- Optional: a [Spotify developer app](https://developer.spotify.com/dashboard) (Spotify playback and song details)
+
+### 2. Get the code
 
 ```bash
+git clone https://github.com/rohitisvibing/meloops.git
+cd meloops
 npm install
 cp .env.example .env.local
+```
+
+### 3. Set up Supabase
+
+1. In the Supabase SQL editor, run `supabase/migrations/0001_init.sql`, then `supabase/migrations/0002_media_provider.sql`.
+2. Authentication → Providers → Google: turn it on and paste a Google OAuth client ID and secret.
+   - In Google Cloud, the OAuth client needs the JavaScript origin `http://127.0.0.1:3000` and the redirect URI `https://<project-ref>.supabase.co/auth/v1/callback`.
+3. Authentication → URL Configuration: Site URL `http://127.0.0.1:3000`, redirect URL `http://127.0.0.1:3000/auth/callback`.
+4. In `.env.local`, set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (Project Settings → API).
+
+### 4. Set up Spotify (optional)
+
+1. In the Spotify dashboard, add the redirect URI `http://127.0.0.1:3000/api/spotify/callback`, and add each user's email under User Management.
+2. In `.env.local`, set `SPOTIFY_CLIENT_ID`, `SPOTIFY_CLIENT_SECRET` and `SPOTIFY_REDIRECT_URI`.
+3. Generate `SPOTIFY_TOKEN_KEY` with `openssl rand -base64 32` and add it to `.env.local`.
+
+### 5. Run
+
+```bash
 npm run dev -- -H 127.0.0.1
 ```
 
-Open http://127.0.0.1:3000. With no Supabase values set, the app runs in **demo mode**: no login, sample data, and everything saved in this browser.
+Open http://127.0.0.1:3000 (use `127.0.0.1`, not `localhost`).
 
-## Modes
+Without Supabase settings the app runs in demo mode: no sign-in, and data is saved in the browser.
 
-| Setup | Accounts | YouTube moments | Spotify moments |
-|---|---|---|---|
-| Nothing configured | Demo, this browser | Stream in the app; details from oEmbed | Spotify embed (often a 30 s preview, detected and explained) |
-| + Supabase | Google sign-in, synced | same | same |
-| + `YOUTUBE_API_KEY` | same | Song length known up front | same |
-| + Spotify app | same | same | Full songs in the app for connected Premium users (5 allowlisted users in Development Mode) |
+### 6. Deploy (Vercel)
 
-While a moment plays, the player dock shows the embedded player at 200 px or more with nothing on top of it, as YouTube requires. Minimising the dock pauses playback.
-
-### Supabase + Google
-
-1. Create a Supabase project. Run `supabase/migrations/0001_init.sql` in the SQL editor, or use `supabase db push`.
-2. Under Authentication → Providers, enable Google with an OAuth client from Google Cloud. Add `http://127.0.0.1:3000/auth/callback` to the redirect URLs.
-3. Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`.
-
-### Spotify
-
-1. Create an app at developer.spotify.com/dashboard. The owner needs Premium.
-2. Add the redirect URI `http://127.0.0.1:3000/api/spotify/callback`, and add each tester under User Management (5 maximum).
-3. Set the `SPOTIFY_*` variables. Generate `SPOTIFY_TOKEN_KEY` with `openssl rand -base64 32`.
-
-The Spotify connection is stored in an encrypted httpOnly cookie on each device. It is separate from the Google account, so disconnecting never touches playlists.
-
-## Tests
-
-```bash
-npm test             # unit (Vitest)
-npm run test:e2e     # Playwright at 390×844 and 320×640, against a production build in demo mode
-```
-
-YouTube refuses to play videos in automated browsers, so the e2e tests swap in stubs of the YouTube and Spotify player APIs (`tests/e2e/fixtures/`). Check real playback by hand on a phone, and record it in the live-check log in `docs/youtube-feasibility.md`.
-
-## Layout
-
-- `lib/providers/` holds the players: YouTube embed, Spotify embed, Spotify Web Playback SDK, and `rules.ts` (what plays next for each repeat mode, segment-end detection, Spotify preview detection). The UI never shows "playing" without state reported by the player.
-- `lib/media/` parses YouTube and Spotify links and builds outbound links.
-- `components/player-dock.tsx` is the dock that holds the embedded players.
-- `lib/data/` defines the `Repo` contract, with a Supabase implementation and a localStorage one for demo mode.
-- `lib/spotify/` handles URL parsing (client) plus OAuth, token sealing and metadata (server).
-- `components/tape-strip.tsx` is the trim transport: start/end tabs, a playhead that follows and sets the player, Play from the playhead, loop and Mark start/end. `lib/client/use-trim-player.ts` drives the editor's own player (YouTube embed, Spotify embed, or the Premium SDK).
+1. Import the repo in Vercel and add the same variables from `.env.local`, with `SPOTIFY_REDIRECT_URI` set to `https://<your-app>.vercel.app/api/spotify/callback`.
+2. Add `https://<your-app>.vercel.app` to Supabase (Site URL and `/auth/callback` redirect), the Google OAuth JavaScript origins, and the Spotify redirect URIs.

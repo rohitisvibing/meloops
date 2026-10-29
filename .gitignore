@@ -47,3 +47,10 @@ next-env.d.ts
 
 # local OAuth credentials
 Auth JSON/
+
+# local only: AI tooling, research notes, tests
+.claude/
+docs/
+tests/
+vitest.config.mts
+playwright.config.ts
