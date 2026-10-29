@@ -1,0 +1,9 @@
+# Never upload local secrets or tooling. Production env vars are set in Vercel.
+.env*
+!.env.example
+Auth JSON/
+.claude/
+node_modules/
+.next/
+test-results/
+playwright-report/

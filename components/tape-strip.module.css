@@ -1,0 +1,266 @@
+.wrap {
+  background: var(--shell);
+  color: var(--on-shell);
+  border-radius: var(--radius-shell);
+  padding: 14px 18px 12px;
+  box-shadow: inset 0 -5px 0 var(--shell-deep);
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Transport: play from the playhead, live position, loop. */
+.header {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.play,
+.loop {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 0;
+  padding: 0;
+}
+
+.play {
+  background: var(--tape-ink);
+  color: var(--tape-on-ink);
+  box-shadow: 0 3px 0 var(--tape-ink-deep);
+}
+
+.play:active:not(:disabled) {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--tape-ink-deep);
+}
+
+.play:disabled {
+  opacity: 0.45;
+}
+
+.loop {
+  background: transparent;
+  color: var(--tape-ink);
+  opacity: 0.45;
+}
+
+.loop[aria-pressed="true"] {
+  opacity: 1;
+  background: var(--tape-ink-wash);
+}
+
+.window {
+  text-align: center;
+  font-size: var(--t-md);
+  background: var(--tape-track);
+  color: var(--tape-window-text);
+  border-radius: 8px;
+  padding: 6px 8px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track {
+  position: relative;
+  height: 56px;
+  border-radius: 10px;
+  background: var(--tape-track);
+  touch-action: none;
+  margin: 0 6px;
+  cursor: pointer;
+}
+
+.tick,
+.tickMajor {
+  position: absolute;
+  bottom: 0;
+  width: 1px;
+  background: var(--tape-tick);
+  pointer-events: none;
+}
+
+.tick {
+  height: 10px;
+}
+
+.tickMajor {
+  height: 18px;
+  background: var(--tape-tick-major);
+}
+
+/* Selected range: tape-coloured with fine stripes like magnetic tape. */
+.range {
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  background: repeating-linear-gradient(90deg, var(--tape-range-a) 0 3px, var(--tape-range-b) 3px 6px);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+/* Only the grip above the tape is draggable, so it never blocks the tabs. */
+.playhead {
+  position: absolute;
+  top: -30px;
+  width: 32px;
+  height: 28px;
+  margin-left: -16px;
+  background: none;
+  border: 0;
+  padding: 0;
+  touch-action: none;
+  z-index: 3;
+  cursor: ew-resize;
+}
+
+/* The line through the tape; ignores the pointer. */
+.playheadLine {
+  position: absolute;
+  top: -4px;
+  bottom: 0;
+  width: 3px;
+  margin-left: -1.5px;
+  background: var(--tape-head);
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px var(--tape-ink);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.playheadLine[data-playing="true"] {
+  background: var(--tape-head-live);
+}
+
+.playheadKnob {
+  position: absolute;
+  left: 50%;
+  top: 5px;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border-radius: 50%;
+  background: var(--tape-head);
+  border: 3px solid var(--tape-ink);
+}
+
+.playhead[data-playing="true"] .playheadKnob {
+  background: var(--tape-knob-live);
+}
+
+.playhead[data-active="true"] .playheadKnob {
+  transform: scale(1.2);
+}
+
+.playhead:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.playhead:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.tab {
+  position: absolute;
+  top: -6px;
+  width: 30px;
+  height: 68px;
+  margin-left: -15px;
+  border-radius: 9px;
+  border: 2px solid var(--tape-ink);
+  background: var(--tape-tab);
+  box-shadow: 0 3px 0 var(--tape-ink);
+  display: grid;
+  place-items: center;
+  touch-action: none;
+  padding: 0;
+  transition: transform 160ms cubic-bezier(0.3, 1.6, 0.5, 1);
+  animation: seat 420ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+
+/* Expand the touch target past the visible tab. */
+.tab::before {
+  content: "";
+  position: absolute;
+  inset: -6px -10px;
+}
+
+.tabEnd {
+  animation-delay: 60ms;
+}
+
+.tab[data-active="true"] {
+  transform: translateY(-3px) scale(1.06);
+  background: var(--tape-tab-active);
+}
+
+.tab:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 2px;
+}
+
+.grip {
+  width: 10px;
+  height: 22px;
+  background: repeating-linear-gradient(180deg, var(--tape-ink) 0 2px, transparent 2px 5px);
+}
+
+@keyframes seat {
+  from {
+    transform: translateY(-14px);
+    opacity: 0;
+  }
+}
+
+.scale {
+  position: relative;
+  height: 18px;
+  margin: 6px 6px 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  font-stretch: 85%;
+  color: var(--tape-label);
+}
+
+.scale span {
+  position: absolute;
+  transform: translateX(-50%);
+}
+
+.scale span:first-child {
+  transform: none;
+}
+
+.marks {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.mark {
+  min-height: 40px;
+  border-radius: 12px;
+  border: 2px solid var(--tape-ink);
+  background: transparent;
+  color: var(--tape-ink);
+  font-stretch: 85%;
+  font-weight: 700;
+  font-size: var(--t-sm);
+}
+
+.mark:active:not(:disabled) {
+  background: var(--tape-ink-wash);
+}
+
+.mark:disabled {
+  opacity: 0.4;
+}
