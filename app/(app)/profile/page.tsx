@@ -1,35 +1,17 @@
 "use client";
 
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { Suspense, useEffect } from "react";
+import { Suspense } from "react";
 import { useToast } from "@/components/toast";
 import { usePlayer } from "@/lib/client/player-context";
 import { useRepo } from "@/lib/client/repo-context";
 import { DEMO_STORAGE_KEY } from "@/lib/data/local-repo";
 import { isDemoMode } from "@/lib/env";
 
-const SPOTIFY_MESSAGES: Record<string, string> = {
-  connected: "Spotify connected",
-  denied: "Spotify connection cancelled",
-  error: "Spotify didn't connect. Try again.",
-};
-
 function ProfileView() {
   const { user, signOut } = useRepo();
-  const { connection, disconnect, reloadConnection } = usePlayer();
+  const { connection, disconnect } = usePlayer();
   const toast = useToast();
-  const params = useSearchParams();
-  const router = useRouter();
-  const path = usePathname();
 
-  // Show the result of the Spotify redirect once, then clean the URL.
-  const spotifyStatus = params.get("spotify");
-  useEffect(() => {
-    if (!spotifyStatus) return;
-    toast(SPOTIFY_MESSAGES[spotifyStatus] ?? SPOTIFY_MESSAGES.error);
-    void reloadConnection();
-    router.replace(path);
-  }, [spotifyStatus, toast, reloadConnection, router, path]);
 
   return (
     <>

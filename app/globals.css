@@ -3,121 +3,7 @@
 /* Tokens ------------------------------------------------------------------ */
 
 :root {
-  --paper: #f7f9f9;
-  --surface: #eceeef;
-  --ink: #171c34;
-  --ink-soft: #4a4f66;
-  --line: #bbbac7;
-  --blue: #0b5af4;
-  --blue-deep: #0f45a6;
-  --on-blue: #f7f9f9;
-  --shell: #d1c8b5;
-  --shell-deep: #b5aa92;
-  --on-shell: #171c34;
-  --lcd: #171c34;
-  --lcd-text: #8fbbe6;
-  --lcd-dim: #3d4a73;
-  --sky: #5b99d2;
-  --plum: #b244c3;
-  --danger: #c0262d;
-  --focus: #0b5af4;
-  --link: #0b5af4;
-
-  /* Fixed-colour surfaces that follow the theme. */
-  --bezel: #0d1124;
-  --on-lcd: #f7f9f9;
-  --deck-input-bg: #f7f9f9;
-  --deck-input-ink: #171c34;
-  --deck-placeholder: #5a6078;
-  --deck-error: #ffe1e3;
-  --tape-ink: #171c34;
-  --tape-ink-deep: #0d1124;
-  --tape-on-ink: #f7f9f9;
-  --tape-ink-wash: rgba(23, 28, 52, 0.1);
-  --tape-track: #171c34;
-  --tape-tick: #3d4a73;
-  --tape-tick-major: #5b6a9a;
-  --tape-range-a: #5b99d2;
-  --tape-range-b: #6aa6dc;
-  --tape-head: #f7f9f9;
-  --tape-head-live: #8fbbe6;
-  --tape-knob-live: #5b99d2;
-  --tape-tab: #ece5d6;
-  --tape-tab-active: #f7f9f9;
-  --tape-label: #4a4f66;
-  --tape-window-text: #8fbbe6;
-
-  --radius-shell: 28px;
-  --radius-control: 14px;
-  --gutter: 16px;
-  --nav-h: 72px;
-
-  --font-face: var(--font-archivo), system-ui, sans-serif;
-  --font-lcd: var(--font-doto), ui-monospace, monospace;
-
-  /* 1.25 scale on a 16px base */
-  --t-xs: 0.8rem;
-  --t-sm: 0.875rem;
-  --t-md: 1rem;
-  --t-lg: 1.25rem;
-  --t-xl: 1.5625rem;
-  --t-2xl: 1.953rem;
-  --t-3xl: 2.441rem;
-
-  color-scheme: light;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    /* Night drive: the retro sunset palette. Each hue has one job. */
-    --paper: #0f2229;
-    --surface: #173139;
-    --ink: #fdddb8;
-    --ink-soft: #c9b39a;
-    --line: #2c4a52;
-    --blue: #ff6b35;
-    --blue-deep: #c9471b;
-    --on-blue: #0f2229;
-    --shell: #fda65d;
-    --shell-deep: #d88a42;
-    --on-shell: #0f2229;
-    --lcd: #081519;
-    --lcd-text: #63afa1;
-    --lcd-dim: #2c5a5c;
-    --sky: #63afa1;
-    --plum: #ff5a4e;
-    --danger: #ff5a4e;
-    --focus: #fda65d;
-    --link: #7fcdbe;
-
-    --bezel: #081519;
-    --on-lcd: #fdddb8;
-    --deck-input-bg: #fdddb8;
-    --deck-input-ink: #0f2229;
-    --deck-placeholder: #7a5a3e;
-    --deck-error: #0f2229;
-    --tape-ink: #0f2229;
-    --tape-ink-deep: #05100f;
-    --tape-on-ink: #fdddb8;
-    --tape-ink-wash: rgba(15, 34, 41, 0.12);
-    --tape-track: #081519;
-    --tape-tick: #2c5a5c;
-    --tape-tick-major: #3f7a78;
-    --tape-range-a: #63afa1;
-    --tape-range-b: #74bfb1;
-    --tape-head: #fdddb8;
-    --tape-head-live: #ff6b35;
-    --tape-knob-live: #ff6b35;
-    --tape-tab: #fdddb8;
-    --tape-tab-active: #fff3e3;
-    --tape-label: #4a3420;
-    --tape-window-text: #63afa1;
-    color-scheme: dark;
-  }
-}
-
-:root[data-theme="dark"] {
-  /* Night drive: the retro sunset palette. Each hue has one job. */
+  /* Night drive: the retro sunset palette. Each hue has one job. Meloops is dark only. */
   --paper: #0f2229;
   --surface: #173139;
   --ink: #fdddb8;
@@ -138,6 +24,7 @@
   --focus: #fda65d;
   --link: #7fcdbe;
 
+  /* Fixed-colour surfaces (bezels, the paste box, the tape). */
   --bezel: #081519;
   --on-lcd: #fdddb8;
   --deck-input-bg: #fdddb8;
@@ -160,6 +47,24 @@
   --tape-tab-active: #fff3e3;
   --tape-label: #4a3420;
   --tape-window-text: #63afa1;
+
+  --radius-shell: 28px;
+  --radius-control: 14px;
+  --gutter: 16px;
+  --nav-h: 72px;
+
+  --font-face: var(--font-archivo), system-ui, sans-serif;
+  --font-lcd: var(--font-doto), ui-monospace, monospace;
+
+  /* 1.25 scale on a 16px base */
+  --t-xs: 0.8rem;
+  --t-sm: 0.875rem;
+  --t-md: 1rem;
+  --t-lg: 1.25rem;
+  --t-xl: 1.5625rem;
+  --t-2xl: 1.953rem;
+  --t-3xl: 2.441rem;
+
   color-scheme: dark;
 }
 
@@ -514,23 +419,23 @@ button {
 }
 
 .cover-0 {
-  background: var(--blue);
-  color: var(--shell);
+  background: linear-gradient(155deg, #fdddb8 0 36%, #00759a 36% 45%, #63afa1 45% 56%, #fda65d 56% 68%, #ff6b35 68% 83%, #f2352c 83% 100%);
+  color: #0f2229;
 }
 
 .cover-1 {
-  background: var(--shell);
-  color: var(--blue);
+  background: linear-gradient(120deg, #fdddb8 0 30%, #00759a 30% 40%, #63afa1 40% 52%, #fda65d 52% 66%, #ff6b35 66% 81%, #f2352c 81% 100%);
+  color: #0f2229;
 }
 
 .cover-2 {
-  background: #171c34;
-  color: var(--sky);
+  background: linear-gradient(200deg, #00759a 0 22%, #63afa1 22% 38%, #fda65d 38% 56%, #ff6b35 56% 74%, #f2352c 74% 88%, #fdddb8 88% 100%);
+  color: #0f2229;
 }
 
 .cover-3 {
-  background: var(--plum);
-  color: #f7f9f9;
+  background: linear-gradient(180deg, #fdddb8 0 40%, #00759a 40% 50%, #63afa1 50% 60%, #fda65d 60% 72%, #ff6b35 72% 86%, #f2352c 86% 100%);
+  color: #0f2229;
 }
 
 /* Horizontal shelf -------------------------------------------------------- */
@@ -1101,45 +1006,159 @@ button {
   text-decoration: underline;
 }
 
-/* Night drive covers: the sunset bands, hard-edged like the reference print. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .cover-0 {
-    background: linear-gradient(155deg, #fdddb8 0 36%, #00759a 36% 45%, #63afa1 45% 56%, #fda65d 56% 68%, #ff6b35 68% 83%, #f2352c 83% 100%);
-    color: #0f2229;
-  }
+/* Sunset print --------------------------------------------------------------- */
 
-  :root:not([data-theme="light"]) .cover-1 {
-    background: linear-gradient(120deg, #fdddb8 0 30%, #00759a 30% 40%, #63afa1 40% 52%, #fda65d 52% 66%, #ff6b35 66% 81%, #f2352c 81% 100%);
-    color: #0f2229;
-  }
+.sunset {
+  background: linear-gradient(
+    155deg,
+    #fdddb8 0 34%,
+    #00759a 34% 43%,
+    #63afa1 43% 53%,
+    #fda65d 53% 65%,
+    #ff6b35 65% 80%,
+    #f2352c 80% 100%
+  );
+}
 
-  :root:not([data-theme="light"]) .cover-2 {
-    background: linear-gradient(200deg, #00759a 0 22%, #63afa1 22% 38%, #fda65d 38% 56%, #ff6b35 56% 74%, #f2352c 74% 88%, #fdddb8 88% 100%);
-    color: #0f2229;
-  }
+.sunset-full {
+  position: fixed;
+  inset: -8%;
+  z-index: 0;
+  animation: sunset-rise 900ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
 
-  :root:not([data-theme="light"]) .cover-3 {
-    background: linear-gradient(180deg, #fdddb8 0 40%, #00759a 40% 50%, #63afa1 50% 60%, #fda65d 60% 72%, #ff6b35 72% 86%, #f2352c 86% 100%);
-    color: #0f2229;
+/* The one page-load moment: the bands slide up from the lower left. */
+@keyframes sunset-rise {
+  from {
+    transform: translate(-6%, 8%);
   }
 }
 
-:root[data-theme="dark"] .cover-0 {
-  background: linear-gradient(155deg, #fdddb8 0 36%, #00759a 36% 45%, #63afa1 45% 56%, #fda65d 56% 68%, #ff6b35 68% 83%, #f2352c 83% 100%);
+.sunset-strip {
+  height: 150px;
+  border-radius: var(--radius-shell) var(--radius-shell) 0 0;
+}
+
+.sunset-edge {
+  width: 10px;
+  flex: none;
+  align-self: stretch;
+  border-radius: 6px;
+  background: linear-gradient(180deg, #fdddb8 0 18%, #00759a 18% 32%, #63afa1 32% 48%, #fda65d 48% 64%, #ff6b35 64% 82%, #f2352c 82% 100%);
+}
+
+/* Sign-in -------------------------------------------------------------------- */
+
+.signin {
+  position: relative;
+  min-height: 100dvh;
+  overflow: hidden;
+}
+
+.signin-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 560px;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: calc(40px + env(safe-area-inset-top)) var(--gutter) calc(24px + env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+.signin-head {
   color: #0f2229;
 }
 
-:root[data-theme="dark"] .cover-1 {
-  background: linear-gradient(120deg, #fdddb8 0 30%, #00759a 30% 40%, #63afa1 40% 52%, #fda65d 52% 66%, #ff6b35 66% 81%, #f2352c 81% 100%);
-  color: #0f2229;
+.signin-mark {
+  font-size: clamp(3.4rem, 19vw, 7rem);
+  line-height: 0.9;
+  letter-spacing: -0.04em;
 }
 
-:root[data-theme="dark"] .cover-2 {
-  background: linear-gradient(200deg, #00759a 0 22%, #63afa1 22% 38%, #fda65d 38% 56%, #ff6b35 56% 74%, #f2352c 74% 88%, #fdddb8 88% 100%);
-  color: #0f2229;
+.signin-sub {
+  margin-top: 12px;
+  font-size: var(--t-lg);
+  font-weight: 600;
+  max-width: 18ch;
 }
 
-:root[data-theme="dark"] .cover-3 {
-  background: linear-gradient(180deg, #fdddb8 0 40%, #00759a 40% 50%, #63afa1 50% 60%, #fda65d 60% 72%, #ff6b35 72% 86%, #f2352c 86% 100%);
+.signin-panel {
+  grid-row: 3;
+  display: grid;
+  gap: 14px;
+  background: var(--paper);
+  border-radius: var(--radius-shell);
+  padding: 20px;
+  box-shadow: inset 0 -5px 0 #081519;
+}
+
+.signin-lcd .lcd-text {
+  font-size: var(--t-2xl);
+}
+
+.signin-note {
+  font-size: var(--t-sm);
+  color: var(--ink-soft);
+}
+
+.btn-peach {
+  background: #fdddb8;
   color: #0f2229;
+  box-shadow: 0 3px 0 #c9b39a;
+}
+
+.btn-peach:active:not(:disabled) {
+  box-shadow: 0 1px 0 #c9b39a;
+}
+
+/* Spotify step and Home card ------------------------------------------------- */
+
+.welcome {
+  margin-top: 24px;
+}
+
+.welcome-panel {
+  display: grid;
+  gap: 14px;
+  background: var(--surface);
+  border-radius: 0 0 var(--radius-shell) var(--radius-shell);
+  padding: 20px;
+}
+
+.welcome-title {
+  font-size: var(--t-2xl);
+}
+
+.welcome-points {
+  display: grid;
+  gap: 6px;
+  padding-left: 1.1em;
+  color: var(--ink-soft);
+  list-style: disc;
+}
+
+.spotify-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  margin-top: 24px;
+  padding: 14px 8px 14px 14px;
+  background: var(--surface);
+  border-radius: 20px;
+}
+
+/* Wide screens: flatter bands and a taller sky, so the wordmark and subline sit on peach. */
+@media (min-width: 700px) {
+  .sunset-full {
+    background: linear-gradient(
+      172deg,
+      #fdddb8 0 48%,
+      #00759a 48% 56%,
+      #63afa1 56% 65%,
+      #fda65d 65% 75%,
+      #ff6b35 75% 87%,
+      #f2352c 87% 100%
+    );
+  }
 }

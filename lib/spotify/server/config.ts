@@ -5,7 +5,7 @@ export const SPOTIFY_API = "https://api.spotify.com/v1";
 
 /**
  * Minimum scopes for in-app segment playback:
- * - streaming: Web Playback SDK device
+ * - streaming, user-read-email: Web Playback SDK device (the SDK's documented scope set)
  * - user-read-private: `product` on /me, to check for Premium before offering playback
  * - user-modify-playback-state: start at position_ms, pause, seek
  * - user-read-playback-state: read position for segment-end detection
@@ -13,7 +13,7 @@ export const SPOTIFY_API = "https://api.spotify.com/v1";
  */
 export const SPOTIFY_SCOPES =
   process.env.SPOTIFY_SCOPES ??
-  "streaming user-read-private user-modify-playback-state user-read-playback-state";
+  "streaming user-read-email user-read-private user-modify-playback-state user-read-playback-state";
 
 export function spotifyCredentials() {
   const clientId = process.env.SPOTIFY_CLIENT_ID;

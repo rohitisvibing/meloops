@@ -31,6 +31,7 @@ export async function GET(request: NextRequest) {
     );
     if (!token.refresh_token) return back("error");
     const profile = await fetchProfile(token.access_token);
+    if (profile.status === 403) return back("not_allowed");
     await writeSession({
       accessToken: token.access_token,
       refreshToken: token.refresh_token,
@@ -39,7 +40,7 @@ export async function GET(request: NextRequest) {
       product: profile.product,
       displayName: profile.displayName,
     });
-    return back("connected");
+    return back(profile.product === "premium" ? "connected" : "connected_free");
   } catch {
     return back("error");
   }

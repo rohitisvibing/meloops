@@ -11,7 +11,8 @@ export async function GET(request: NextRequest) {
   if (code) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
-    if (!error) return relativeRedirect(next);
+    // First stop after sign-in: the optional Spotify step, which forwards on to `next`.
+    if (!error) return relativeRedirect(`/welcome?${new URLSearchParams({ next })}`);
   }
   return relativeRedirect("/login?error=1");
 }

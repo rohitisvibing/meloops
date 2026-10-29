@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { PasteDeck } from "@/components/paste-deck";
+import { SpotifyCard } from "@/components/spotify-card";
 import { PlaylistShelf } from "@/components/playlist-shelf";
 import { SegmentEditSheet } from "@/components/segment-edit-sheet";
 import { SegmentRow } from "@/components/segment-row";
@@ -67,6 +68,7 @@ export default function HomePage() {
       </header>
 
       <PasteDeck />
+      <SpotifyCard />
 
       {data && shelf.length > 0 && (
         <section className="section">

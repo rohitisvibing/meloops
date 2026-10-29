@@ -62,14 +62,18 @@ export async function requestToken(body: URLSearchParams): Promise<TokenResponse
   return (await res.json()) as TokenResponse;
 }
 
+/**
+ * The connected account's plan and name. `status` 403 means the account isn't on the app's
+ * User Management list (Spotify Development Mode allows up to 5 listed users).
+ */
 export async function fetchProfile(accessToken: string) {
   const res = await fetch(`${SPOTIFY_API}/me`, {
     headers: { Authorization: `Bearer ${accessToken}` },
     cache: "no-store",
   });
-  if (!res.ok) return { product: null, displayName: null };
+  if (!res.ok) return { status: res.status, product: null, displayName: null };
   const me = (await res.json()) as { product?: string; display_name?: string };
-  return { product: me.product ?? null, displayName: me.display_name ?? null };
+  return { status: res.status, product: me.product ?? null, displayName: me.display_name ?? null };
 }
 
 /** Returns a session with a valid access token, refreshing it when it expires within a minute. */

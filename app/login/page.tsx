@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
+import { SunsetBands } from "@/components/sunset";
 import { isDemoMode } from "@/lib/env";
 import { createClient } from "@/lib/supabase/client";
 
@@ -27,36 +28,35 @@ function LoginView() {
   };
 
   return (
-    <main className="app-frame" style={{ display: "grid", alignContent: "center", gap: 24, paddingBottom: 48 }}>
-      <div className="deck" style={{ paddingTop: 32, paddingBottom: 28 }}>
-        <h1 className="display" style={{ fontSize: "var(--t-3xl)" }}>
-          Meloops
-        </h1>
-        <p style={{ marginTop: 10, fontSize: "var(--t-lg)" }}>Playlists of the best bits of songs.</p>
-        <div className="lcd" style={{ marginTop: 20 }}>
-          <span className="lcd-text" style={{ fontSize: "var(--t-xl)" }}>
-            00:42 ▸ 01:18
-          </span>
-        </div>
-      </div>
+    <main className="signin">
+      <SunsetBands variant="full" />
+      <div className="signin-inner">
+        <header className="signin-head">
+          <h1 className="signin-mark display">Meloops</h1>
+          <p className="signin-sub">The best bits of songs, on repeat.</p>
+        </header>
 
-      {isDemoMode ? (
-        <Link className="btn btn-primary btn-block" href="/">
-          Continue in demo mode
-        </Link>
-      ) : (
-        <button className="btn btn-primary btn-block" onClick={signIn} disabled={busy}>
-          {busy ? "Opening Google…" : "Continue with Google"}
-        </button>
-      )}
-      {error && (
-        <p className="field-error" role="alert">
-          {error}
-        </p>
-      )}
-      <p className="muted" style={{ fontSize: "var(--t-sm)" }}>
-        Google sign-in keeps your playlists. Spotify is only needed later, if you want to play moments here.
-      </p>
+        <section className="signin-panel" aria-label="Sign in">
+          <div className="lcd signin-lcd" aria-hidden="true">
+            <span className="lcd-text">00:42 ▸ 01:18</span>
+          </div>
+          {isDemoMode ? (
+            <Link className="btn btn-peach btn-block" href="/">
+              Continue in demo mode
+            </Link>
+          ) : (
+            <button className="btn btn-peach btn-block" onClick={signIn} disabled={busy}>
+              {busy ? "Opening Google…" : "Continue with Google"}
+            </button>
+          )}
+          {error && (
+            <p className="field-error" role="alert">
+              {error}
+            </p>
+          )}
+          <p className="signin-note">Spotify Premium is optional. You can connect it next.</p>
+        </section>
+      </div>
     </main>
   );
 }
